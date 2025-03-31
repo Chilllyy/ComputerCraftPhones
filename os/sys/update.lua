@@ -55,6 +55,7 @@ function update()
     if pcall(clone, url, folder) then
         shell.run("rm", "/os")
         shell.run("rm", "/startup")
+        shell.run("rm", "/.gitattributes")
         shell.run("cp", "/tmp/upd/*", "/")
         shell.run("rm", "/tmp/upd")
     end
