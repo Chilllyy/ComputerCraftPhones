@@ -61,8 +61,12 @@ function update()
     end
 end
 
+print("Checking for Updates...")
 if check() then
+    print("Found Update")
     update()
+else
+    print("No Update found!")
 end
 
 return {check = check, update = update}
