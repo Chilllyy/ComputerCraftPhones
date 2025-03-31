@@ -61,4 +61,8 @@ function update()
     end
 end
 
+if check() then
+    update()
+end
+
 return {check = check, update = update}
