@@ -1,4 +1,4 @@
-version = require("../ver")
+version = require("/os/ver")
 
 local user = "Chilllyy"
 local repo = "ComputerCraftPhones"
@@ -8,7 +8,8 @@ local url_template = "https://api.github.com/repos/" .. user .. "/" .. repo .. "
 function getWebTable(url)
     local response = http.get(url)
     local data = response.readAll()
-    return textutils.unserializeJSON(response.readAll())
+    local table = textutils.unserializeJSON(data)
+    return table
 end
 
 function getWebRaw(url)
@@ -19,15 +20,15 @@ end
 function check()
     local url = url_template .. "releases/latest"
     local table = getWebTable(url)
-    local cloud_version = table.tag_name
-    local local_version = version.getVersion()
+    local cloud_version = tonumber(table.tag_name)
+    local local_version = tonumber(version.getVersion())
     return cloud_version > local_version
 end
 
 function clone(url, folder)
     fs.makeDir(folder)
-    local response = http.get(url)
-    local data = textutils.unserializeJSON(response.readAll())
+    response = http.get(url)
+    data = textutils.unserializeJSON(response.readAll())
     for i,v in ipairs(data) do
         if v.type == "dir" then
             local new_url = v.url
@@ -51,7 +52,12 @@ function update()
 
     fs.delete(folder)
 
-    pcall(clone(url, folder))
+    if pcall(clone, url, folder) then
+        shell.run("rm", "os")
+        shell.run("rm", "startup")
+        shell.run("cp", "/tmp/upd", "/")
+        shell.run("rm", "/tmp/upd")
+    end
 end
 
 return {check = check, update = update}
