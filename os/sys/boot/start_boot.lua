@@ -1,5 +1,5 @@
 function start_ui()
-    --shell.run("/os/sys/boot/ui.lua")
+    shell.run("/os/sys/boot/ui.lua")
 end
 
 function start_backend()
