@@ -1,1 +1,1 @@
-local update = require("/os/sys/update")
+--local update = require("/os/sys/update")
