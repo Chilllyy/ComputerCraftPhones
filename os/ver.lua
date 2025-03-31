@@ -1,4 +1,4 @@
-local version = 1
+local version = 2
 
 function getVersion()
     return version
