@@ -53,12 +53,19 @@ function update()
     fs.delete(folder)
 
     if pcall(clone, url, folder) then
-        shell.run("rm", "/os")
-        shell.run("rm", "/startup")
-        shell.run("rm", "/.gitattributes")
+        delete("/os")
+        delete("/startup")
         shell.run("cp", "/tmp/upd/*", "/")
-        shell.run("rm", "/tmp/upd")
+        delete("/tmp/upd")
     end
+end
+
+function delete(path)
+    if fs.exists(path) then
+        fs.delete(path)
+        return true
+    else
+        return false
 end
 
 print("Checking for Updates...")
