@@ -57,6 +57,7 @@ function update()
         delete("/startup")
         shell.run("cp", "/tmp/upd/*", "/")
         delete("/tmp/upd")
+        os.reboot()
     end
 end
 
