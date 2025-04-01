@@ -1,4 +1,5 @@
-version = require("/os/ver")
+local version_file = fs.open('/os/ver.lua', 'r')
+local version = version_file.readAll()
 
 local user = "Chilllyy"
 local repo = "ComputerCraftPhones"
@@ -18,10 +19,9 @@ function getWebRaw(url)
 end
 
 function check()
-    local url = url_template .. "releases/latest"
-    local table = getWebTable(url)
-    local cloud_version = tonumber(table.tag_name)
-    local local_version = tonumber(version.getVersion())
+    local url = url_template .. "/" .. branch .. "/os/ver.lua"
+    local cloud_version = tonumber(getWebRaw(url))
+    local local_version = tonumber(version)
     return cloud_version > local_version
 end
 
@@ -53,10 +53,9 @@ function update()
     fs.delete(folder)
 
     if pcall(clone, url, folder) then
+        fs.copy("/os/sys/update/startup.lua", "/")
         delete("/os")
         delete("/startup")
-        shell.run("cp", "/tmp/upd/*", "/")
-        delete("/tmp/upd")
         os.reboot()
     end
 end
