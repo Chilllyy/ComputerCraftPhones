@@ -55,6 +55,7 @@ function update()
 
     if pcall(clone, url, folder) then
         delete("/startup.lua")
+        delete("/startup")
         fs.makeDir("/startup")
         fs.copy("/os/sys/update/startup.lua", "/startup/install.lua")
         delete("/os")
