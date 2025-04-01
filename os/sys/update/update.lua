@@ -54,7 +54,7 @@ function update()
     fs.delete(folder)
 
     if pcall(clone, url, folder) then
-        fs.copy("/os/sys/update/startup.lua", "/")
+        fs.copy("/os/sys/update/startup.lua", "/startup.lua")
         delete("/os")
         delete("/startup")
         os.reboot()
