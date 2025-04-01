@@ -66,6 +66,7 @@ function delete(path)
         return true
     else
         return false
+    end
 end
 
 print("Checking for Updates...")
