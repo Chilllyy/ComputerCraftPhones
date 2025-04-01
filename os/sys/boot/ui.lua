@@ -6,7 +6,7 @@ function setBackgroundColor(...) return term.setBackgroundColor(...) end
 LARGE_BUTTONS = false
 SCROLL_SPEED = 1
 
-BORDER_COLOR = colors.blue
+BORDER_COLOR = colors.orange
 BACKGROUND_COLOR = colors.black
 TITLE_COLOR = colors.white
 
