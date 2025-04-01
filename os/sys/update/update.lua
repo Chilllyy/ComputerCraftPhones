@@ -1,4 +1,4 @@
-local version_file = fs.open('/os/ver.lua', 'r')
+local version_file = fs.open('/os/ver', 'r')
 local version = version_file.readAll()
 
 local user = "Chilllyy"
