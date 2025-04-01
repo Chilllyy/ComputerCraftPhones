@@ -1,0 +1,1 @@
+--local update = require("/os/sys/update/update")

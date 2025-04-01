@@ -3,4 +3,4 @@ if not fs.exists("/user") then
 end
 
 shell.run("cd", "user")
-shell.run("/apps/ui")
+shell.run("/os/sys/boot/start_boot.lua")
