@@ -91,7 +91,7 @@ function main()
                     drawOtherScreen(otherScreenScroll)
                 end
 
-            end,
+            end
         )
         os.sleep(0)
     end
