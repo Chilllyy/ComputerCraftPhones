@@ -1,3 +1,5 @@
+local backend = require ("backend")
+
 function setPos(...) return term.setCursorPos(...) end
 function clear(...) return term.clear() end
 function setTextColor(...) return term.setTextColor(...) end
@@ -51,6 +53,8 @@ function main()
 
                 screenID = checkTitleClick(screenID, x, y)
 
+                if backend.checkUpdate() then taxiStatus = 4 end
+
                 if screenID == 0 then
                     drawTaxiScreen(taxiScreenScroll, taxiStatus)
                     taxiStatus = checkTaxiClick(taxiScreenScroll, taxiStatus, x, y)
@@ -87,7 +91,7 @@ function main()
                     drawOtherScreen(otherScreenScroll)
                 end
 
-            end
+            end,
         )
         os.sleep(0)
     end
@@ -124,6 +128,13 @@ function checkTaxiClick(scroll, status, x, y)
 
     if x < 4 or x > 23 or y < 2 or y > 15 then
         return status
+    end
+
+    if x > 2 and x < 25 and y > 16 and y < 19 then --Update
+        if status == 4 then
+            setPos(1, 1)
+            backend.update()
+        end
     end
 
     if (LARGE_BUTTONS) then
@@ -279,6 +290,13 @@ function drawTaxiStatus(status, station)
         term.write("You are already at")
         setPos(3, 18)
         term.write("desired Station")
+    end
+
+    if status == 4 then
+        setTextColor(colors.green)
+        term.write("Update Found!")
+        setPos(3, 18)
+        term.write("Click here to update!")
     end
 end
 

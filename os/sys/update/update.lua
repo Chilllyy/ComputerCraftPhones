@@ -39,13 +39,4 @@ function delete(path)
     end
 end
 
-print("Checking for Updates...")
-if check() then
-    print("Found Update")
-    print("Please Wait...")
-    update()
-else
-    print("No Update found!")
-end
-
 return {check = check, update = update}
