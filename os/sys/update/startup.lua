@@ -1,41 +1,10 @@
-local git = require "/os/lib/git"
+local git = require "/startup/git"
 
 local user = "Chilllyy"
 local repo = "ComputerCraftPhones"
 local branch = settings.get("upd_branch") or "stable"
 
 local url_template = "https://api.github.com/repos/" .. user .. "/" .. repo .. "/"
-
-function getWebTable(url)
-    local response = http.get(url)
-    local data = response.readAll()
-    local table = textutils.unserializeJSON(data)
-    return table
-end
-
-function clone(url, folder)
-    fs.makeDir(folder)
-    response = http.get(url)
-    data = textutils.unserializeJSON(response.readAll())
-    for i,v in ipairs(data) do
-        if v.type == "dir" then
-            local new_url = v.url
-            local new_dir = folder .. "/" .. v.name
-            clone(new_url, new_dir)
-        elseif v.type == "file" then
-            local dl_url = v.download_url
-            local dl_r = http.get(dl_url)
-            local dl_d = dl_r.readAll()
-            local file = folder .. "/" .. v.name
-            local f = fs.open(file, "w")
-            f.write(dl_d)
-            f.close()
-        end
-    end
-end
-
-local url = url_template .. "contents?ref=" .. branch
-local folder = "/tmp/upd"
 
 print("Downloading Update, please wait")
 
@@ -72,14 +41,12 @@ function bar()
         term.setTextColor(colors.green)
         term.write("Update Successful")
         sleep(3)
-        fs.delete("/startup.lua")
         os.reboot()
     else
         term.clear()
         term.setCursorPos(4, 12)
         term.setTextColor(colors.red)
         term.write("Update Unsuccessful")
-        fs.delete("/startup.lua")
         sleep(3)
         os.shutdown()
     end
@@ -87,13 +54,17 @@ end
 
 function backend()
     shell.run("rm", "/os")
-    shell.run("rm", "/.gitattributes")
-    if pcall(clone, url, folder) then
-        shell.run("rm", "/startup")
-        shell.run("cp", "/tmp/upd/*", "/")
-        shell.run("rm", "/tmp/upd")
-        complete = true
-    end
+    git.clone(user, "ComputerCraftPhones", branch, "/tmp/upd")
+    shell.run("rm", "/startup")
+    shell.run("cp", "/tmp/upd/*", "/")
+    shell.run("rm", "/tmp/upd")
+
+    fs.makeDir("/os/apps/appstore/")
+    git.clone(user, "CCAppstore", "main", "/os/apps/appstore")
+
+    fs.makeDir("/os/apps/settings")
+    git.clone(user, "CCSettings", "main", "/os/apps/settings")
+    complete = true
 end
 
 parallel.waitForAll(backend, bar)
