@@ -6,15 +6,12 @@ local repo = "ComputerCraftPhones"
 local branch = settings.get("upd_branch") or "stable"
 local url_template = "https://api.github.com/repos/" .. user .. "/" .. repo .. "/"
 
-function getWebRaw(url)
-    local response = http.get(url)
-    return response.readAll()
-end
-
 function check()
-    local url = url_template .. branch .. "/os/ver"
     local url = "https://raw.githubusercontent.com/" .. user .. "/" .. repo .. "/" .. branch .. "/os/ver"
-    local cloud_version = tonumber(getWebRaw(url))
+
+    local resp = http.get(url)
+
+    local cloud_version = tonumber(resp.readAll())
     local local_version = tonumber(version)
     return cloud_version > local_version
 end
