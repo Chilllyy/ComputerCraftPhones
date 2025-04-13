@@ -119,11 +119,11 @@ function click_listener()
         if has_update then
             if x >= 3 and x <= MAX_X - 3 and y >= MAX_Y - 1 and y <= MAX_Y then
                 backend.log("Requesting System Update")
-                backend.update.update()
                 setPos(2, 3)
                 setFG(colors.black)
                 setBG(colors.lightGray)
                 write("Grabbing Update, please wait...")
+                backend.update.update()
             end
         end
         if grid[x] ~= nil and grid[x][y] ~= nil then
