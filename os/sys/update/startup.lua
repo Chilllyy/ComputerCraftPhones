@@ -1,3 +1,5 @@
+local git = require "/os/lib/git"
+
 local user = "Chilllyy"
 local repo = "ComputerCraftPhones"
 local branch = settings.get("upd_branch") or "stable"
