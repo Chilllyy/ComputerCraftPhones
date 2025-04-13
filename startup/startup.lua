@@ -3,7 +3,7 @@ if not fs.exists("/user") then
 end
 
 if not fs.exists("/apps") then
-    fs.makedir("/apps")
+    fs.makeDir("/apps")
 end
 
 shell.run("cd", "user")
