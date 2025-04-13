@@ -122,7 +122,9 @@ function click_listener()
                 setPos(2, 3)
                 setTextColor(colors.black)
                 setBackgroundColor(colors.lightGray)
-                write("Grabbing Update, please wait...")
+                write("Grabbing Update")
+                setPos(2, 4)
+                write("Please wait...")
                 refresh = false
                 backend.update.update()
             end
