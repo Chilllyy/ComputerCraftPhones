@@ -122,6 +122,7 @@ function click_listener()
                 backend.update.update()
                 setPos(2, 3)
                 setFG(colors.black)
+                setBG(colors.lightGray)
                 write("Grabbing Update, please wait...")
             end
         end
