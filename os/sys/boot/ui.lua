@@ -120,8 +120,8 @@ function click_listener()
             if x >= 3 and x <= MAX_X - 3 and y >= MAX_Y - 1 and y <= MAX_Y then
                 backend.log("Requesting System Update")
                 setPos(2, 3)
-                setFG(colors.black)
-                setBG(colors.lightGray)
+                setTextColor(colors.black)
+                setBackgroundColor(colors.lightGray)
                 write("Grabbing Update, please wait...")
                 backend.update.update()
             end
